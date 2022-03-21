@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 
-export type Joke = {
+export type JokeType = {
   categories: string[];
   created_at: string;
   icon_url: string;
@@ -11,4 +11,4 @@ export type Joke = {
   value: string;
 };
 
-export type FetchJokesType = Promise<Observable<AxiosResponse<Joke>>>;
+export type FetchJokesType = Promise<Observable<AxiosResponse<JokeType>>>;

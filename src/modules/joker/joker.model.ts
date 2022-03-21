@@ -1,25 +1,38 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity('favoriteJokes')
 @ObjectType()
-export class Joker {
+export class Joke {
+  @PrimaryGeneratedColumn()
+  @Field()
+  ident: number;
+
+  @Column()
   @Field()
   id: string;
 
+  @Column()
   @Field()
   value: string;
 
+  @Column('text', { array: true })
   @Field(() => [String])
   categories: string[];
 
+  @Column()
   @Field()
   icon_url: string;
 
+  @Column()
   @Field()
   url: string;
 
+  @Column()
   @Field()
   created_at: string;
 
+  @Column()
   @Field()
   updated_at: string;
 }
@@ -29,7 +42,6 @@ export class Jokes {
   @Field()
   total: number;
 
-  @Field(() => [Joker])
-  result: Joker[];
-
+  @Field(() => [Joke])
+  result: Joke[];
 }
