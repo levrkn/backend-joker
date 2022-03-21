@@ -4,13 +4,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { lastValueFrom } from 'rxjs';
 import { jokesUrl } from 'src/utils/constants';
 import { Repository } from 'typeorm';
-import { Joke } from './joker.model';
+import { FavoriteJoke, Joke } from './joker.model';
 
 @Injectable()
 export class JokerService {
   constructor(
-    @InjectRepository(Joke)
-    private readonly JokesRepository: Repository<Joke>,
+    @InjectRepository(FavoriteJoke)
+    private readonly JokesRepository: Repository<FavoriteJoke>,
     private httpService: HttpService,
   ) {}
 
@@ -34,7 +34,7 @@ export class JokerService {
     ).data;
   }
 
-  async addFavoriteJoke(id: string): Promise<Joke[]> {
+  async addFavoriteJoke(id: string): Promise<FavoriteJoke[]> {
     const joke = await this.JokesRepository.save(
       this.JokesRepository.create(
         (
@@ -42,11 +42,10 @@ export class JokerService {
         ).data,
       ),
     );
-    this.JokesRepository.find().then((data) => console.log(data));
     return joke;
   }
 
-  async getFavoriteJokes(): Promise<Joke[]> {
-    return this.JokesRepository.find().then((data) => data)
+  async getFavoriteJokes(): Promise<FavoriteJoke[]> {
+    return this.JokesRepository.find().then((data) => data);
   }
 }

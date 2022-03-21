@@ -1,13 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('favoriteJokes')
 @ObjectType()
 export class Joke {
-  @PrimaryGeneratedColumn()
-  @Field()
-  ident: number;
-
   @Column()
   @Field()
   id: string;
@@ -35,6 +30,14 @@ export class Joke {
   @Column()
   @Field()
   updated_at: string;
+}
+
+@Entity('favoriteJokes')
+@ObjectType()
+export class FavoriteJoke extends Joke {
+  @PrimaryGeneratedColumn()
+  @Field()
+  ident: number;
 }
 
 @ObjectType()

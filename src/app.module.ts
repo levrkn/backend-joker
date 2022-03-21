@@ -3,7 +3,7 @@ import { ApolloDriver } from '@nestjs/apollo/dist/drivers';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Joke } from './modules/joker/joker.model';
+import { FavoriteJoke, Joke } from './modules/joker/joker.model';
 import { JokerModule } from './modules/joker/joker.module';
 
 @Module({
@@ -15,7 +15,7 @@ import { JokerModule } from './modules/joker/joker.module';
       username: 'postgres',
       password: '1',
       database: 'postgres',
-      entities: [ Joke ],
+      entities: [ Joke, FavoriteJoke ],
       synchronize: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({

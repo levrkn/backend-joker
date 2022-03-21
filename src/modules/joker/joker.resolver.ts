@@ -1,7 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { FetchJokesType, JokeType } from 'src/utils/types';
 import { JokerService } from './joker.service';
-import { Joke, Jokes } from './joker.model';
+import { FavoriteJoke, Joke, Jokes } from './joker.model';
 
 @Resolver(() => [Joke, Jokes])
 export class JokerResolver {
@@ -21,13 +20,13 @@ export class JokerResolver {
     return this.JokerService.getJokeBySearch(query);
   }
 
-  @Query(() => [Joke], { name: 'favoriteJokes' })
-  async favoriteJokes(): Promise<Joke[]> {
+  @Query(() => [FavoriteJoke], { name: 'favoriteJokes' })
+  async favoriteJokes(): Promise<FavoriteJoke[]> {
     return this.JokerService.getFavoriteJokes();
   }
 
-  @Mutation(() => Joke, { name: 'addFavoriteJoke' })
-  async addFavoriteJoke(@Args('id') id: string): Promise<Joke[]> {
+  @Mutation(() => FavoriteJoke, { name: 'addFavoriteJoke' })
+  async addFavoriteJoke(@Args('id') id: string): Promise<FavoriteJoke[]> {
     return this.JokerService.addFavoriteJoke(id);
   }
 }
