@@ -35,14 +35,21 @@ export class JokerService {
   }
 
   async addFavoriteJoke(id: string): Promise<FavoriteJoke[]> {
-    const joke = await this.JokesRepository.save(
-      this.JokesRepository.create(
-        (
-          await lastValueFrom(this.httpService.get(`${jokesUrl}/${id}`))
-        ).data,
-      ),
-    );
-    return joke;
+    const result = (
+      await lastValueFrom(this.httpService.get(`${jokesUrl}/${id}`))
+    ).data;
+
+    if (
+      await this.JokesRepository.find({
+        where: { id: id },
+      }).then((data) => data.length)
+    ) {
+      return result;
+    } else {
+      return await this.JokesRepository.save(
+        this.JokesRepository.create(result),
+      );
+    }
   }
 
   async getFavoriteJokes(): Promise<FavoriteJoke[]> {
